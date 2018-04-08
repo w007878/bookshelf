@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}图书销售管理系统{% endblock %}
+{% block head %}
+    <style type="text/css"></style>
+{% endblock %}
+
+{% block navpart %}
+  <div class="col-auto row">
+    <form class="form-inline my-2 my-lg-0 row mr-sm-2" action="{{ url_for('book.list') }}" method="get">
+      <div class="form-group row mr-sm-2">
+        <input class="form-control my-2 mr-sm-2" type="text" placeholder="Search" aria-label="search">
+      </div>
+      <button class="btn btn-outline-success mr-sm-2 my-2" type="submit">Search</button>
+    </form>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('basic.logout') }}" class="btn btn-success my-2 mr-sm-2">Log out</a>
+    {% else %}
+    <a href="{{ url_for('basic.login') }}" class="btn btn-success my-2 mr-sm-2">Sign in</a>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block content %}
+  
+  <div class="row">
+    <div class="col-md-3 mt-2">
+      <div class="card mb-3 text-center">
+        <h4 class="card-header card-info">用户信息</h4>
+        <div class="card-block">
+          {% if current_user.is_authenticated %}
+
+          <dl class="dl-horizontal">
+            <dt>Nickname</dt><dd>{{ current_user['nickname'] }}</dd>
+            <dt>Authority</dt>
+            <dd>
+              {% if current_user['access'] == 0 %} Administrator {% endif %}
+              {% if current_user['access'] == 1 %} Seller {% endif %}
+              {% if current_user['access'] == 2 %} Press {% endif %}
+            </dd>
+          </dl>
+          <a href="{{ url_for('user.edit') }}" class="btn btn-outline-primary btn-block">UPDATE PROFILE</a>
+          {% else %}
+          用户尚未登录.
+          {% endif %}
+        </div>
+      </div> 
+			{% block sidebar %}
+				<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+					<a href="{{ url_for('basic.index') }}" role="tab" class="nav-link">首页</a>
+					<a href="{{ url_for('book.list') }}" role="tab" class="nav-link">书籍目录</a>
+					{% if current_user.access == 0 %}<a href="{{ url_for('admin.report')}}" role="tab" class="nav-link">查看报表</a> {% endif %}
+					<a href="{{ url_for('supply.list') }}" role="tab" class="nav-link">查看供应商列表</a>
+				</div>
+			{% endblock %}
+
+    </div>
+    {% block page%}{% endblock %}
+  </div>
+  
+{% endblock %}
