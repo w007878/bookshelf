@@ -1,6 +1,5 @@
 *.sqlite3
-
-website/bookshelf/__pycache__/
-website/bookshelf/bin/
-
+*__pycache__/*
+*bin/*
+*.pyc
 
