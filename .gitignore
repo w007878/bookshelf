@@ -1,6 +1,6 @@
-
-website/db\.sqlite3
+*.sqlite3
 
 website/bookshelf/__pycache__/
-
 website/bookshelf/bin/
+
+
