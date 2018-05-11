@@ -1,60 +1,53 @@
-{% extends "base.html" %}
-{% block title %}图书销售管理系统{% endblock %}
-{% block head %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta author="snowyjone">
+    <title>{% block title %}{% endblock %}</title>
+
+    {% load static %}
+		<link href="{% static "bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "popper.js/dist/popper.min.js" %}"></script>
+    <script src="{% static "tooltip.js/dist/tooltip.min.js" %}"></script>
+    <script src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "node_modules/chart.js/dist/Chart.min.js" %}"></script>
     <style type="text/css"></style>
-{% endblock %}
+</head>
 
-{% block navpart %}
-  <div class="col-auto row">
-    <form class="form-inline my-2 my-lg-0 row mr-sm-2" action="{{ url_for('book.list') }}" method="get">
-      <div class="form-group row mr-sm-2">
-        <input class="form-control my-2 mr-sm-2" type="text" placeholder="Search" aria-label="search">
+<body>
+  
+<nav class="navbar navbar-light ml-2 mt-3">
+  <div class="row mr-4 col-lg-12">
+    <div class="col align-items-sm-start">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
       </div>
-      <button class="btn btn-outline-success mr-sm-2 my-2" type="submit">Search</button>
-    </form>
-    {% if current_user.is_authenticated %}
-    <a href="{{ url_for('basic.logout') }}" class="btn btn-success my-2 mr-sm-2">Log out</a>
-    {% else %}
-    <a href="{{ url_for('basic.login') }}" class="btn btn-success my-2 mr-sm-2">Sign in</a>
-    {% endif %}
-  </div>
-{% endblock %}
-
-{% block content %}
-  
-  <div class="row">
-    <div class="col-md-3 mt-2">
-      <div class="card mb-3 text-center">
-        <h4 class="card-header card-info">用户信息</h4>
-        <div class="card-block">
-          {% if current_user.is_authenticated %}
-
-          <dl class="dl-horizontal">
-            <dt>Nickname</dt><dd>{{ current_user['nickname'] }}</dd>
-            <dt>Authority</dt>
-            <dd>
-              {% if current_user['access'] == 0 %} Administrator {% endif %}
-              {% if current_user['access'] == 1 %} Seller {% endif %}
-              {% if current_user['access'] == 2 %} Press {% endif %}
-            </dd>
-          </dl>
-          <a href="{{ url_for('user.edit') }}" class="btn btn-outline-primary btn-block">UPDATE PROFILE</a>
-          {% else %}
-          用户尚未登录.
-          {% endif %}
-        </div>
-      </div> 
-			{% block sidebar %}
-				<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-					<a href="{{ url_for('basic.index') }}" role="tab" class="nav-link">首页</a>
-					<a href="{{ url_for('book.list') }}" role="tab" class="nav-link">书籍目录</a>
-					{% if current_user.access == 0 %}<a href="{{ url_for('admin.report')}}" role="tab" class="nav-link">查看报表</a> {% endif %}
-					<a href="{{ url_for('supply.list') }}" role="tab" class="nav-link">查看供应商列表</a>
-				</div>
-			{% endblock %}
-
     </div>
-    {% block page%}{% endblock %}
+    <h1 class="navbar-brand col col-auto float-right" href="#">SNOWYJONE -- ta的书，以及天空之城</h1>
   </div>
-  
-{% endblock %}
+</nav>
+
+  {% block header %}{% endblock %}
+  {% block body %}{% endblock %}
+</body>
+
+</html>

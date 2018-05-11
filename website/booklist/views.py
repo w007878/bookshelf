@@ -3,9 +3,17 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import staticfiles
 
+from .load_index import preface
+
+import os, sys
+
 # Index of books
 def index(request):
-    return render(request, 'booklist/index.html', {'title':u'snowyjone 和他心爱的书们'})
+    
+    a = {
+        'preface':preface()
+    }
+    return render(request, 'booklist/index.html', a)
 
 # Details for each books
 def book(request, book_id):

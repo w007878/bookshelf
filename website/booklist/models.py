@@ -18,3 +18,8 @@ class Book(models.Model):
 
     # Current status of the book
     
+class IntroText(models.Model):
+    tag = models.CharField(max_length=10, primary_key=True)
+    title = models.CharField(max_length=40)
+    content = models.TextField()
+    
